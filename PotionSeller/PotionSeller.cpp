@@ -5,17 +5,19 @@ using namespace std;
 #include <cmath>
 #include <iostream>
 #include <vector>
+#include <array>
 #include <string>
 
+int ItemCounter(string search, const vector<string>(&mStock));									//Returns the count of an item in the owners stock
+int FullCost(string search, string item, int prices);
 int main()
 {
-
-	//character riches, measured in D0$H
+	//character riches, measured in D0$Hs
 	int pDosh = 2500;
 	int mDosh = 5000;
 
 	int quantity = 0;							//user input quantity of items to buy/sell
-	int i = 0;
+	int iDebug = 0;
 
 	bool test = false;							//DEBUG do loop stopper
 	bool buySell = false;						//buySell = true when player is making purchase, false when player is selling
@@ -25,7 +27,7 @@ int main()
 
 	//List of all game items and prices
 	string item[] = { "Healing", "Poison", "Antidote", "Phoenix", "Luck", "Water", "Divine_Blessing", "Rare_Coins" };
-	const int prices[] = {20, 30, 40, 1750, 1500, 5, 900, 125};
+	int prices[8] = {20, 30, 40, 1750, 1500, 5, 900, 125};
 
 	//player + merchant stock lists ***NEED TO BE GENERATED***
 	vector<string> pStock(3, item[3]);
@@ -34,12 +36,10 @@ int main()
 	//merchant purchase discrimination and sell price categories
 	enum merchantFee { Low, Normal, High };
 
-		int ItemCounter(string search, const vector<string>& mStock);									//Returns the count of an item in the owners stock
-		
+																								//Returns the price of an item
+
 		/* NEEDS UPDATES
-
-		int BuyPrice(const string & item);																							//Returns the price of an item
-
+		
 		bool OwnerCheck(bool buySell, const string & item, const int& quantity, vector<string> & mStock, vector<string> & pStock);	//Checks the owners stock for item quantity
 
 		bool OwnerCheck(bool buySell, const int& item_price, const int& quantity, int& pDosh, int& mDosh);							//Overload - checks the owners Dosh amounts
@@ -56,19 +56,19 @@ int main()
 	//the main item selling and buying takes place here
 	do
 	{
-		cout << "Potion Seller loop: " << i + 1 << "\t" <<endl;
+		cout << "Potion Seller loop: " << iDebug + 1 << "\t" <<endl;
 
+		for (int i = 0; i < 8; i++) {
+			int temp = FullCost(item[3], item[i], prices[i]);
 
-		cout << "\t" << ItemCounter(item[3], mStock) << endl;
-
-		cout << "\t" << ItemCounter(item[3], pStock) << endl;
-
-
-
-
-
-		i++;
-		if (i == 3)																												//DEBUG do loop count
+			if (temp != 0) {
+				//do something
+				cout << "TEST";
+			}
+		}
+		
+		iDebug++;
+		if (iDebug == 3)																												//DEBUG do loop count
 		{
 			test = false;
 			cout << endl << endl;
@@ -102,14 +102,16 @@ int ItemCounter(string search, const vector<string>(&mStock))									//Returns 
 
 //** to end
 
-int BuyPrice(string search, const string(&item)[])																							//Returns the price of an item
+int FullCost(string search, string item, int prices)																							//Returns the price of an item
 {
- 
-	return 0;
+		if (search == item)
+		{
+			cout << prices;
+			return prices;
+		}
+
+		return 0;
 }
-
-
-
 
 bool OwnerCheck(const bool& buySell, const string& item, const int& quantity, vector<string>& mStock, vector<string>& pStock)	//Checks the owners stock for item quantity
 {
