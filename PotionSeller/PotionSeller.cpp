@@ -5,6 +5,7 @@ using namespace std;
 #include <cmath>
 #include <iostream>
 #include <vector>
+#include <string>
 
 int main()
 {
@@ -20,20 +21,22 @@ int main()
 	bool buySell = false;						//buySell = true when player is making purchase, false when player is selling
 	string owner[] = { "merchant" , "player" }; //function input
 
+	string search = "";
 
 	//List of all game items and prices
 	string item[] = { "Healing", "Poison", "Antidote", "Phoenix", "Luck", "Water", "Divine_Blessing", "Rare_Coins" };
+	const int prices[] = {20, 30, 40, 1750, 1500, 5, 900, 125};
 
-	//player + merchant stock lists
-	vector<string> pStock;
-	vector<string> mStock;
+	//player + merchant stock lists ***NEED TO BE GENERATED***
+	vector<string> pStock(3, item[3]);
+	vector<string> mStock(5, item[0]);
 
 	//merchant purchase discrimination and sell price categories
 	enum merchantFee { Low, Normal, High };
 
-	//function prototypes
-	{
-		int ItemCounter(const string & owner, const string & item, const vector<string> & p_m_stock);									//Returns the count of an item in the owners stock
+		int ItemCounter(string search, const vector<string>& mStock);									//Returns the count of an item in the owners stock
+		
+		/* NEEDS UPDATES
 
 		int BuyPrice(const string & item);																							//Returns the price of an item
 
@@ -46,16 +49,19 @@ int main()
 		void Transfer(bool buySell, const int& item_price, const int& quantity, int& mDosh, int& pDosh);							//Overload to move Dosh from owner to other character in trade
 
 		void StockList(const vector<string> & mStock);																				//prints the current merchant stock;
-	}
+		*/
 	cout << "Potion Seller!\n";
 
+	mStock.push_back(item[3]);
 	//the main item selling and buying takes place here
 	do
 	{
-		cout << "Potion Seller loop: " << i + 1 << endl;
+		cout << "Potion Seller loop: " << i + 1 << "\t" <<endl;
 
 
+		cout << "\t" << ItemCounter(item[3], mStock) << endl;
 
+		cout << "\t" << ItemCounter(item[3], pStock) << endl;
 
 
 
@@ -78,22 +84,38 @@ int main()
 
 
 
-int ItemCounter(const string& owner, const string& item, const vector<string>& p_m_stock)									//Returns the count of an item in the owners stock
+int ItemCounter(string search, const vector<string>(&mStock))									//Returns the count of an item in the merchants stock
 {
+	int temp = 0;
+
+	for (unsigned int i = 0; i < mStock.size(); i++)
+	{
+		if (mStock[i] == search)
+		{
+			temp++;
+		}
+	}
+	return temp;
+}
+
+//Overloaded to return the count of an item in the players stock
+
+//** to end
+
+int BuyPrice(string search, const string(&item)[])																							//Returns the price of an item
+{
+ 
 	return 0;
 }
 
 
-int BuyPrice(const string& item)																							//Returns the price of an item
-{
-	return 0;
-}
+
 
 bool OwnerCheck(const bool& buySell, const string& item, const int& quantity, vector<string>& mStock, vector<string>& pStock)	//Checks the owners stock for item quantity
 {
 	int count = 0;
 
-	for (int i = 0; int i < mStock.size(); i++)
+	for (unsigned int i = 0; i < mStock.size(); i++)
 	{
 		if (mStock[i] == item)
 		{
@@ -116,8 +138,16 @@ bool OwnerCheck(const bool& buySell, const int& item_price, const int& quantity,
 void Transfer(const bool& buySell, const string& item, const int& quantity, vector<string>& mStock, vector<string>& pStock)		//Moves a number of items to owner from other character in trade
 {
 	string tempItem = item;
+	int tempCount = 0;
 
-	int tempCount = ItemCounter();
+	if (buySell)
+	{
+
+	}
+	else
+	{
+
+	}
 
 	for (int i = 0; i < tempCount; i++)
 	{
@@ -139,9 +169,7 @@ void Transfer(const bool& buySell, const int& item_price, const int& quantity, i
 {
 	int tempDosh = item_price;
 
-	int tempCount = ItemCounter();
-
-	for (int i = 0; i < tempCount; i++)
+	for (int i = 0; i < quantity; i++)
 	{
 		if (buySell)
 		{
@@ -160,26 +188,12 @@ void StockList(const vector<string>& mStock)																				//prints the cur
 {
 	cout << "The merchant's current stock is:\n\n";
 
-	for ( int i = 0; int i < mStock.size(); i++)
+	for (unsigned int i = 0; i < mStock.size(); i++)
 	{
 		
 
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
