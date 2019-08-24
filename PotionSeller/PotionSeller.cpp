@@ -13,6 +13,8 @@ int ItemCounter(string search, const vector<string>(&mStock));
 
 int PrintStock(string item[], const vector<string>(&stock));
 
+bool EnoughStock(string item, int quantity, vector<string>& _Stock);
+
 
 int main()
 {
@@ -77,6 +79,12 @@ int main()
 		
 		PrintStock(item, mStock);
 
+		cout << endl << endl << endl;
+
+		cout << "EnoughStock() Testing:\n\n";
+
+		cout << EnoughStock(item[0], 10, mStock);
+
 		iDebug++;
 		if (iDebug == 1)																												//DEBUG do loop count
 		{
@@ -114,42 +122,37 @@ int PrintStock(string item[], const vector<string>(&stock))
 	cout << "Current Merchant Stock:\n";
 	for (int i = 0; i < 8; i++)
 	{
-		int tempCount = 0;
 		tempItem = item[i];
 
+		int tempCount = ItemCounter(tempItem, stock);
+		/* Same as ItemCounter()
 		for (int j = 0; j < stock.size(); j++)
 		{
 			if (stock[j] == tempItem)
 			{
 				tempCount++;
 			}
-		}	
+		}
+		*/
+		
 		cout << item[i] << "  x" << tempCount << endl;
 	}
 	return 0;
 }
 
-bool OwnerCheck(const bool& buySell, const string& item, const int& quantity, vector<string>& mStock, vector<string>& pStock)	//Checks the owners stock for item quantity
+bool EnoughStock(string item, int quantity, vector<string>& _Stock)	//Checks the owners stock for item quantity before Transfer() can be used
 {
-	int count = 0;
+	bool ans = false;
 
-	for (unsigned int i = 0; i < mStock.size(); i++)
+	if (ItemCounter(item, _Stock) >= quantity)
 	{
-		if (mStock[i] == item)
-		{
-			count++;
-		}
-
+		ans = true;
 	}
-
-	
-	return false;
-}
-
-
-bool OwnerCheck(const bool& buySell, const int& item_price, const int& quantity, int& pDosh, int& mDosh)							//Overload - checks the owners Dosh amounts
-{
-	return false;
+	else
+	{
+		ans = false;
+	}
+	return ans;
 }
 
 
@@ -178,27 +181,16 @@ void Transfer(const bool& buySell, const string& item, const int& quantity, vect
 			//move from pStock to mStock
 		}
 	}
-	
+
 
 }
 
 
-void Transfer(const bool& buySell, const int& item_price, const int& quantity, int& mDosh, int& pDosh)							//Overload to move Dosh from owner to other character in trade
+
+
+bool OwnerCheck(const bool& buySell, const int& item_price, const int& quantity, int& pDosh, int& mDosh)							//Overload - checks the owners Dosh amounts
 {
-	int tempDosh = item_price;
-
-	for (int i = 0; i < quantity; i++)
-	{
-		if (buySell)
-		{
-			//move from pDosh to mDosh
-		}
-		else
-		{
-			//move from mDosh to pDOsh
-		}
-	}
-
+	return false;
 }
 
 
