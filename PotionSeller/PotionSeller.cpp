@@ -7,9 +7,13 @@ using namespace std;
 #include <vector>
 #include <array>
 #include <string>
+#include <algorithm>
 
-int ItemCounter(string search, const vector<string>(&mStock));									//Returns the count of an item in the owners stock
-int FullCost(string search, string item, int prices);
+int ItemCounter(string search, const vector<string>(&mStock));
+
+int PrintStock(string item[], const vector<string>(&stock));
+
+
 int main()
 {
 	//character riches, measured in D0$Hs
@@ -26,49 +30,55 @@ int main()
 	string search = "";
 
 	//List of all game items and prices
-	string item[] = { "Healing", "Poison", "Antidote", "Phoenix", "Luck", "Water", "Divine_Blessing", "Rare_Coins" };
+	string item[8] = { "Healing", "Poison", "Antidote", "Phoenix", "Luck", "Water", "Divine_Blessing", "Rare_Coins" };
 	int prices[8] = {20, 30, 40, 1750, 1500, 5, 900, 125};
 
-	//player + merchant stock lists ***NEED TO BE GENERATED***
-	vector<string> pStock(3, item[3]);
-	vector<string> mStock(5, item[0]);
+	//player and merchant inventory initialization
+	vector<string> pStock(7, item[7]);
+	vector<string> mStock(20, item[0]);
+
+	//player and merchant inventory population and sorting
+	for (int i = 0; i < 5; i++)
+	{
+		mStock.push_back(item[1]);
+		mStock.push_back(item[2]);
+		mStock.push_back(item[5]);
+		mStock.push_back(item[5]);
+
+		if (i%2 ==0)
+		{
+			mStock.push_back(item[1]);
+			mStock.push_back(item[1]);
+			mStock.push_back(item[6]);
+			mStock.push_back(item[7]);
+			mStock.push_back(item[7]);
+		}
+		else if (i%3 == 0)
+		{
+			pStock.push_back(item[2]);
+			pStock.push_back(item[2]);
+			pStock.push_back(item[5]);
+			pStock.push_back(item[7]);
+			pStock.push_back(item[7]);
+		}
+	}
+	mStock.push_back(item[3]);
+	mStock.push_back(item[4]);
 
 	//merchant purchase discrimination and sell price categories
 	enum merchantFee { Low, Normal, High };
 
-																								//Returns the price of an item
+	cout << "Potion Seller!\n\n";
 
-		/* NEEDS UPDATES
-		
-		bool OwnerCheck(bool buySell, const string & item, const int& quantity, vector<string> & mStock, vector<string> & pStock);	//Checks the owners stock for item quantity
-
-		bool OwnerCheck(bool buySell, const int& item_price, const int& quantity, int& pDosh, int& mDosh);							//Overload - checks the owners Dosh amounts
-
-		void Transfer(bool buySell, const string & item, const int& quantity, vector<string> & mStock, vector<string> & pStock);		//Moves a number of items to owner from other character in trade
-
-		void Transfer(bool buySell, const int& item_price, const int& quantity, int& mDosh, int& pDosh);							//Overload to move Dosh from owner to other character in trade
-
-		void StockList(const vector<string> & mStock);																				//prints the current merchant stock;
-		*/
-	cout << "Potion Seller!\n";
-
-	mStock.push_back(item[3]);
 	//the main item selling and buying takes place here
 	do
 	{
-		cout << "Potion Seller loop: " << iDebug + 1 << "\t" <<endl;
-
-		for (int i = 0; i < 8; i++) {
-			int temp = FullCost(item[3], item[i], prices[i]);
-
-			if (temp != 0) {
-				//do something
-				cout << "TEST";
-			}
-		}
+		cout << "Potion Seller loop: " << iDebug + 1 << "\t" <<endl<<endl;
 		
+		PrintStock(item, mStock);
+
 		iDebug++;
-		if (iDebug == 3)																												//DEBUG do loop count
+		if (iDebug == 1)																												//DEBUG do loop count
 		{
 			test = false;
 			cout << endl << endl;
@@ -78,8 +88,6 @@ int main()
 			test = true;
 		}
 	} while (test);
-
-
 }
 
 
@@ -98,19 +106,27 @@ int ItemCounter(string search, const vector<string>(&mStock))									//Returns 
 	return temp;
 }
 
-//Overloaded to return the count of an item in the players stock
 
-//** to end
-
-int FullCost(string search, string item, int prices)																							//Returns the price of an item
+int PrintStock(string item[], const vector<string>(&stock))
 {
-		if (search == item)
-		{
-			cout << prices;
-			return prices;
-		}
+	string tempItem = "";
 
-		return 0;
+	cout << "Current Merchant Stock:\n";
+	for (int i = 0; i < 8; i++)
+	{
+		int tempCount = 0;
+		tempItem = item[i];
+
+		for (int j = 0; j < stock.size(); j++)
+		{
+			if (stock[j] == tempItem)
+			{
+				tempCount++;
+			}
+		}	
+		cout << item[i] << "  x" << tempCount << endl;
+	}
+	return 0;
 }
 
 bool OwnerCheck(const bool& buySell, const string& item, const int& quantity, vector<string>& mStock, vector<string>& pStock)	//Checks the owners stock for item quantity
