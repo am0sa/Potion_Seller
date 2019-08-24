@@ -15,6 +15,8 @@ int PrintStock(string item[], const vector<string>(&stock));
 
 bool EnoughStock(string item, int quantity, vector<string>& _Stock);
 
+void Transfer(string item, int count, vector<string>& takeFrom, vector<string>& giveTo);
+
 
 int main()
 {
@@ -77,16 +79,28 @@ int main()
 	{
 		cout << "Potion Seller loop: " << iDebug + 1 << "\t" <<endl<<endl;
 		
+		cout << "Merchant's Stock:\n";
 		PrintStock(item, mStock);
+
+		cout << "\nPlayer's Stock:\n";
+		PrintStock(item, pStock);
 
 		cout << endl << endl << endl;
 
-		cout << "EnoughStock() Testing:\n\n";
+		cout << "Transfer() Testing:\n\n";
 
-		cout << EnoughStock(item[0], 10, mStock);
+		Transfer(item[0], 8, mStock, pStock);
+
+		PrintStock(item, mStock);
+
+		cout << endl << endl;
+
+		PrintStock(item, pStock);
+
+		cout << endl << endl;
 
 		iDebug++;
-		if (iDebug == 1)																												//DEBUG do loop count
+		if (iDebug == 1)	//DEBUG do loop count
 		{
 			test = false;
 			cout << endl << endl;
@@ -119,21 +133,11 @@ int PrintStock(string item[], const vector<string>(&stock))
 {
 	string tempItem = "";
 
-	cout << "Current Merchant Stock:\n";
 	for (int i = 0; i < 8; i++)
 	{
 		tempItem = item[i];
 
 		int tempCount = ItemCounter(tempItem, stock);
-		/* Same as ItemCounter()
-		for (int j = 0; j < stock.size(); j++)
-		{
-			if (stock[j] == tempItem)
-			{
-				tempCount++;
-			}
-		}
-		*/
 		
 		cout << item[i] << "  x" << tempCount << endl;
 	}
@@ -156,33 +160,22 @@ bool EnoughStock(string item, int quantity, vector<string>& _Stock)	//Checks the
 }
 
 
-void Transfer(const bool& buySell, const string& item, const int& quantity, vector<string>& mStock, vector<string>& pStock)		//Moves a number of items to owner from other character in trade
+void Transfer(string item, int count, vector<string>& takeFrom, vector<string>& giveTo)		//Moves a number of items to owner from other character in trade
 {
-	string tempItem = item;
-	int tempCount = 0;
+	int initialItemCount = ItemCounter(item, takeFrom);
+	int i = 0;
+	int tracker = count;
 
-	if (buySell)
+	do
 	{
-
-	}
-	else
-	{
-
-	}
-
-	for (int i = 0; i < tempCount; i++)
-	{
-		if (buySell)
+		if (takeFrom[i] == item)
 		{
-			//move from mStock to pStock
+			giveTo.push_back(takeFrom[i]);
+			takeFrom.erase(takeFrom.begin()+i);
 		}
-		else
-		{
-			//move from pStock to mStock
-		}
-	}
-
-
+		i++;
+		tracker--;
+	} while (tracker > 0);
 }
 
 
