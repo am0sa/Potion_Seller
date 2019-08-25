@@ -21,14 +21,14 @@ int main()
 	int mDosh = 5000;							//Merchant Dosh
 	int buySell = 0;							//Holds the total cost for a purchase of x amount of items
 	int quantity = 0;							//user input quantity of items to buy/sell
-	int choice1 = 0;								//Holds the players menu choices
-	int choice2 = 0;								//Item Choice for purchase
-	int choice3 = 0;								//Quantity to purchase/sell
-	int choice4 = 0;								//Proceed with purchase/sale if equals 1
+	int choice1 = 0;							//Holds the players menu choices
+	int choice2 = 0;							//Item Choice for purchase
+	int choice3 = 0;							//Quantity to purchase/sell
+	int choice4 = 0;							//Proceed with purchase/sale if equals 1
 	int retry = 0;								//Int used for cin validation
 	int tempCheck = 0;
 
-	bool test = false;							//DEBUG do loop stopper
+	bool test = false;							//Program loop stopper
 	string owner[] = { "merchant" , "player" }; //function input
 
 	//List of all game items and prices
@@ -67,8 +67,7 @@ int main()
 	mStock.push_back(item[3]);
 	mStock.push_back(item[4]);
 
-	//merchant purchase discrimination and sell price categories
-	enum merchantFee { Low, Normal, High };
+	//merchant fees to item sales. reduces merchants buying prices by fees[i]
 	int fees[] = { 10, 30, 100 };
 
 	cout << "Welcome to Potion Seller's shop\nThe Potion Seller currently has:\n";
@@ -199,7 +198,6 @@ int main()
 				break;
 
 			case 3: //sell an item
-
 				cout << "\nYour inventory:\n";
 				PrintStock(item, prices, pStock);
 				cout << "\nThis merchant charges $" << fees[1] << "per Item you sell.\n\nWhat would you like to Sell?\nEnter a number from 1 to 8\n";
