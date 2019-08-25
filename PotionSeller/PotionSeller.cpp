@@ -15,6 +15,8 @@ int PrintStock(string item[], const vector<string>(&stock));
 
 bool EnoughStock(string item, int quantity, vector<string>& _Stock);
 
+bool EnoughDosh(string item, string(itemList[]), int count, int prices[], int& _dosh, int& buySell);
+
 void Transfer(string item, int count, vector<string>& takeFrom, vector<string>& giveTo);
 
 
@@ -23,12 +25,12 @@ int main()
 	//character riches, measured in D0$Hs
 	int pDosh = 2500;
 	int mDosh = 5000;
+	int buySell = 0;
 
 	int quantity = 0;							//user input quantity of items to buy/sell
 	int iDebug = 0;
 
 	bool test = false;							//DEBUG do loop stopper
-	bool buySell = false;						//buySell = true when player is making purchase, false when player is selling
 	string owner[] = { "merchant" , "player" }; //function input
 
 	string search = "";
@@ -87,17 +89,11 @@ int main()
 
 		cout << endl << endl << endl;
 
-		cout << "Transfer() Testing:\n\n";
+		cout << "EnoughDosh() Testing:\n\n";
 
-		Transfer(item[0], 8, mStock, pStock);
+		cout << EnoughDosh(item[0], item, 15, prices, pDosh, buySell);
 
-		PrintStock(item, mStock);
-
-		cout << endl << endl;
-
-		PrintStock(item, pStock);
-
-		cout << endl << endl;
+		cout << endl << "Total Cost: " << buySell;
 
 		iDebug++;
 		if (iDebug == 1)	//DEBUG do loop count
@@ -111,8 +107,6 @@ int main()
 		}
 	} while (test);
 }
-
-
 
 int ItemCounter(string search, const vector<string>(&mStock))									//Returns the count of an item in the merchants stock
 {
@@ -128,17 +122,11 @@ int ItemCounter(string search, const vector<string>(&mStock))									//Returns 
 	return temp;
 }
 
-
 int PrintStock(string item[], const vector<string>(&stock))
 {
-	string tempItem = "";
-
 	for (int i = 0; i < 8; i++)
 	{
-		tempItem = item[i];
-
-		int tempCount = ItemCounter(tempItem, stock);
-		
+		int tempCount = ItemCounter(item[i], stock);
 		cout << item[i] << "  x" << tempCount << endl;
 	}
 	return 0;
@@ -159,6 +147,34 @@ bool EnoughStock(string item, int quantity, vector<string>& _Stock)	//Checks the
 	return ans;
 }
 
+bool EnoughDosh(string item, string (itemList[]), int count, int prices[], int &_dosh, int &buySell)	//Checks the buyers Do$h based on price and item to buy
+{
+	bool ans = false;
+	int i = 0;
+	int tempPrice = 0;
+	buySell = 0;		//erase garbage values.
+
+	for (; i < 8; i++)
+	{
+		if (item == itemList[i])
+		{
+			tempPrice = prices[i];
+			break;
+		}
+	}
+
+	if (_dosh >= (count * tempPrice))
+	{
+		buySell = (count * tempPrice);
+		ans = true;
+	}
+	else
+	{
+		ans = false;
+	}
+
+	return ans;
+}
 
 void Transfer(string item, int count, vector<string>& takeFrom, vector<string>& giveTo)		//Moves a number of items to owner from other character in trade
 {
@@ -179,24 +195,6 @@ void Transfer(string item, int count, vector<string>& takeFrom, vector<string>& 
 }
 
 
-
-
-bool OwnerCheck(const bool& buySell, const int& item_price, const int& quantity, int& pDosh, int& mDosh)							//Overload - checks the owners Dosh amounts
-{
-	return false;
-}
-
-
-void StockList(const vector<string>& mStock)																				//prints the current merchant stock;
-{
-	cout << "The merchant's current stock is:\n\n";
-
-	for (unsigned int i = 0; i < mStock.size(); i++)
-	{
-		
-
-	}
-}
 
 
 
