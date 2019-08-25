@@ -17,7 +17,7 @@ void Transfer(string item, int count, vector<string>& takeFrom, vector<string>& 
 
 int main()
 {
-	int pDosh = 2500;							//Player Dosh
+	int pDosh = 1500;							//Player Dosh
 	int mDosh = 5000;							//Merchant Dosh
 	int buySell = 0;							//Holds the total cost for a purchase of x amount of items
 	int quantity = 0;							//user input quantity of items to buy/sell
@@ -46,6 +46,7 @@ int main()
 		mStock.push_back(item[2]);
 		mStock.push_back(item[5]);
 		mStock.push_back(item[5]);
+		pStock.push_back(item[1]);
 
 		if (i%2 ==0)
 		{
@@ -57,11 +58,13 @@ int main()
 		}
 		else if (i%3 == 0)
 		{
-			pStock.push_back(item[2]);
-			pStock.push_back(item[2]);
-			pStock.push_back(item[5]);
+			pStock.push_back(item[3]);
+			pStock.push_back(item[4]);
+			pStock.push_back(item[4]);
 			pStock.push_back(item[7]);
-			pStock.push_back(item[7]);
+			pStock.push_back(item[7]);			
+			pStock.push_back(item[1]);
+
 		}
 	}
 	mStock.push_back(item[3]);
@@ -144,6 +147,10 @@ int main()
 					cin.clear();
 					cin.ignore(std::numeric_limits<int>::max(), '\n');
 
+					if (!EnoughDosh(item[choice2 - 1], item, choice3, prices, pDosh, buySell))
+					{
+						break;
+					}
 					if (retry == 1)
 					{
 						cout << "Invalid Entry\n";
@@ -160,6 +167,11 @@ int main()
 
 						do
 						{
+							if (!EnoughDosh(item[choice2 - 1], item, choice3, prices, pDosh, buySell))
+							{
+								break;
+							}
+
 							cout << "\nEnter a choice: ";
 							cin >> choice4;
 							retry = cin.fail();
@@ -241,6 +253,11 @@ int main()
 					cin.clear();
 					cin.ignore(std::numeric_limits<int>::max(), '\n');
 
+					if (!EnoughDosh(item[choice2 - 1], item, choice3, prices, mDosh, buySell))
+					{
+						break;
+					}
+
 					if (retry == 1)
 					{
 						cout << "Invalid Entry\n";
@@ -258,6 +275,8 @@ int main()
 
 						do
 						{
+
+
 							cout << "\nEnter a choice: ";
 							cin >> choice4;
 							cout << endl;
@@ -389,6 +408,7 @@ bool EnoughDosh(string item, string (itemList[]), int count, int prices[], int &
 	else
 	{
 		ans = false;
+		cout << "\n\n>>>>>>>>>>NOT ENOUGH DOSH!!!!<<<<<<<<<<\n\t\t:(\n\n";
 	}
 
 	return ans;
@@ -418,50 +438,3 @@ void Transfer(string item, int count, vector<string>& takeFrom, vector<string>& 
 
 	} while (tracker > 0);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
