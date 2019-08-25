@@ -89,11 +89,10 @@ int main()
 
 		cout << endl << endl << endl;
 
-		cout << "EnoughDosh() Testing:\n\n";
+		Transfer(item[0], 20, mStock, pStock);
 
-		cout << EnoughDosh(item[0], item, 15, prices, pDosh, buySell);
-
-		cout << endl << "Total Cost: " << buySell;
+		cout << "Out of stock test\nNew Merchant's Stock:\n";
+		PrintStock(item, mStock);
 
 		iDebug++;
 		if (iDebug == 1)	//DEBUG do loop count
@@ -188,9 +187,16 @@ void Transfer(string item, int count, vector<string>& takeFrom, vector<string>& 
 		{
 			giveTo.push_back(takeFrom[i]);
 			takeFrom.erase(takeFrom.begin()+i);
+			tracker--;
 		}
+		
 		i++;
-		tracker--;
+
+		if (i >= takeFrom.size())
+		{
+			i = 0;
+		}
+
 	} while (tracker > 0);
 }
 
